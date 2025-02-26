@@ -1,4 +1,8 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
 .env
-/traefik/acme.json
-/traefik/logs
-/wireguard/config
+.env.*
+!.env.example
