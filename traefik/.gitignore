@@ -1,2 +1,7 @@
-/traefik/acme.json
-/traefik/logs
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+/logs
+acme.json
