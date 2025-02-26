@@ -1,0 +1,16 @@
+http:
+  routers:
+    landing:
+      entryPoints: https
+      rule: Host(`{{env "MAIN_DOMAIN_NAME"}}`)
+      service: landing
+      tls:
+        certresolver: letsencrypt
+        domains:
+          - main: {{env "MAIN_DOMAIN_NAME"}}
+            sans: www.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    landing:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.5:8080/

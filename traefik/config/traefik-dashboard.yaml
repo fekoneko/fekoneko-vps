@@ -1,0 +1,16 @@
+http:
+  routers:
+    traefik:
+      entryPoints: https
+      rule: Host(`traefik.{{env "MAIN_DOMAIN_NAME"}}`)
+      service: api@internal
+      middlewares: traefik-auth
+      tls:
+        certresolver: letsencrypt
+        domains:
+          - main: traefik.{{env "MAIN_DOMAIN_NAME"}}
+            sans: www.traefik.{{env "MAIN_DOMAIN_NAME"}}
+  middlewares:
+    traefik-auth:
+      basicauth:
+        users: {{env "TRAEFIK_DASHBOARD_CREDENTIALS"}}

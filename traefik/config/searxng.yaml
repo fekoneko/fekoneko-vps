@@ -1,0 +1,16 @@
+http:
+  routers:
+    searxng:
+      entryPoints: https
+      rule: Host(`searxng.{{env "MAIN_DOMAIN_NAME"}}`)
+      service: searxng
+      tls:
+        certresolver: letsencrypt
+        domains:
+          - main: searxng.{{env "MAIN_DOMAIN_NAME"}}
+            sans: www.searxng.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    searxng:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.3:8080/

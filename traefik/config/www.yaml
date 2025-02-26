@@ -1,0 +1,17 @@
+http:
+  routers:
+    www:
+      entryPoints: https
+      rule: HostRegexp(`^www\..*`)
+      service: www
+      middlewares: www-redirect
+      tls:
+        certresolver: letsencrypt
+  middlewares:
+    www-redirect:
+      redirectRegex:
+        regex: ^https://www\\.(.*)
+        replacement: https://${1}
+        permanent: true
+  services:
+    www:

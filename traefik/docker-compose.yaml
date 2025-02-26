@@ -1,0 +1,33 @@
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    env_file:
+      - .env
+    environment:
+      - MAIN_DOMAIN_NAME=${MAIN_DOMAIN_NAME}
+      - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL=${ACME_EMAIL}
+      - TRAEFIK_DASHBOARD_CREDENTIALS=${TRAEFIK_DASHBOARD_CREDENTIALS}
+      - REGRU_USERNAME=${REGRU_USERNAME}
+      - REGRU_PASSWORD=${REGRU_PASSWORD}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/traefik.yaml:/traefik.yaml:ro
+      - ./config:/etc/traefik:ro
+      - ./acme.json:/acme.json
+      - ./logs:/var/log/traefik
+    ports:
+      - 80:80
+      - 443:443
+      - 51820:51820/udp
+    networks:
+      traefik:
+        ipv4_address: 172.20.0.2
+
+networks:
+  traefik:
+    name: traefik
+    external: true

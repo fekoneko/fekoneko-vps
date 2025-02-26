@@ -1,0 +1,27 @@
+http:
+  routers:
+    wireguard-frontend:
+      entrypoints: https
+      rule: Host(`wireguard.{{env "MAIN_DOMAIN_NAME"}}`)
+      service: wireguard-frontend
+      tls:
+        certresolver: letsencrypt
+        domains:
+          - main: wireguard.{{env "MAIN_DOMAIN_NAME"}}
+            sans: www.wireguard.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    wireguard-frontend:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.4:51821/
+
+udp:
+  routers:
+    wireguard:
+      entrypoints: udp
+      service: wireguard
+  services:
+    wireguard:
+      loadBalancer:
+        servers:
+          - address: 172.20.0.4:51820

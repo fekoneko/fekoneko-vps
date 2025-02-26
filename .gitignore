@@ -1,0 +1,4 @@
+.env
+/traefik/acme.json
+/traefik/logs
+/wireguard/config
