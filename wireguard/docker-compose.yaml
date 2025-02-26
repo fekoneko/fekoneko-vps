@@ -9,8 +9,8 @@ services:
       - LANG=${LANG}
       - WG_HOST=${WG_HOST}
       - PASSWORD_HASH=${PASSWORD_HASH}
-      - PORT=${PORT}
-      - WG_PORT=${WG_PORT}
+      - PORT=51821
+      - WG_PORT=51820
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
