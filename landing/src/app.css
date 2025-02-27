@@ -7,3 +7,12 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80;
 }
+
+@utility scroll-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
