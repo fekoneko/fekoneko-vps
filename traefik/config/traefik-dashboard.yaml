@@ -2,9 +2,11 @@ http:
   routers:
     traefik:
       entryPoints: https
-      rule: Host(`traefik.{{env "MAIN_DOMAIN_NAME"}}`)
+      rule: Host(`traefik.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.traefik.{{env "MAIN_DOMAIN_NAME"}}`)
       service: api@internal
-      middlewares: traefik-auth
+      middlewares:
+        - www-redirect@file
+        - traefik-auth
       tls:
         certresolver: letsencrypt
         domains:

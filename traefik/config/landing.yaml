@@ -2,8 +2,9 @@ http:
   routers:
     landing:
       entryPoints: https
-      rule: Host(`{{env "MAIN_DOMAIN_NAME"}}`)
+      rule: Host(`{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.{{env "MAIN_DOMAIN_NAME"}}`)
       service: landing
+      middlewares: www-redirect@file
       tls:
         certresolver: letsencrypt
         domains:

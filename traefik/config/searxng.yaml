@@ -2,8 +2,9 @@ http:
   routers:
     searxng:
       entryPoints: https
-      rule: Host(`searxng.{{env "MAIN_DOMAIN_NAME"}}`)
+      rule: Host(`searxng.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.searxng.{{env "MAIN_DOMAIN_NAME"}}`)
       service: searxng
+      middlewares: www-redirect@file
       tls:
         certresolver: letsencrypt
         domains:
