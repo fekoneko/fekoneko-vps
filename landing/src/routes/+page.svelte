@@ -9,13 +9,13 @@
   >
     <div class="grow sm:h-16"></div>
 
-    <h1 class="text-center font-serif text-5xl font-bold text-pink-950 sm:text-6xl">
+    <h1 class="xs:text-5xl text-center font-serif text-4xl font-bold text-pink-950 sm:text-6xl">
       Welcome to
       <span class="text-pink-600">{MAIN_DOMAIN}</span>
     </h1>
 
     <section
-      class="grid w-full max-w-[48rem] grow grid-cols-1 content-end gap-4 sm:grid-cols-3 sm:gap-8"
+      class="grid w-full max-w-[45rem] grow grid-cols-1 content-end gap-4 sm:grid-cols-3 sm:gap-6 md:gap-8"
     >
       <ServiceCard href="https://searxng.{MAIN_DOMAIN}" name="SearXNG" color="indigo" />
       <ServiceCard href="https://traefik.{MAIN_DOMAIN}" name="Traefik" color="emerald" />
