@@ -8,7 +8,7 @@
   --breakpoint-xl: 80;
 }
 
-@utility scroll-hidden {
+* {
   -ms-overflow-style: none;
   scrollbar-width: none;
 
