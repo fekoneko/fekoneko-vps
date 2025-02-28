@@ -20,5 +20,5 @@
       {label}
     </p>
   {/if}
-  <ArrowRightIcon class="xs:size-16 duration-400 size-12 opacity-80 transition-transform" />
+  <ArrowRightIcon class="xs:size-14 duration-400 size-12 opacity-60 transition-transform" />
 </a>

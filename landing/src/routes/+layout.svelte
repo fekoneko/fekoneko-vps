@@ -24,7 +24,7 @@
       out:fly={{ x: direction === 'left' ? '100%' : '-100%', duration: 1000, opacity: 1 }}
     >
       <div
-        class="scroll-hidden flex size-full flex-col items-center justify-center gap-6 overflow-x-hidden overflow-y-scroll rounded-3xl bg-white p-8 shadow-xl shadow-rose-900/5 transition-all duration-300 sm:gap-12 md:p-12"
+        class="scroll-hidden flex size-full flex-col items-center justify-center gap-8 overflow-x-hidden overflow-y-scroll rounded-3xl bg-white p-8 shadow-xl shadow-rose-900/5 transition-all duration-300 sm:gap-12 md:p-12"
       >
         {@render children()}
       </div>
