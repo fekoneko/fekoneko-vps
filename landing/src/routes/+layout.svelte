@@ -2,14 +2,14 @@
   import { fly, type FlyParams } from 'svelte/transition';
   import '../app.css';
   import type { Snippet } from 'svelte';
-  import { expoOut } from 'svelte/easing';
+  import { cubicOut } from 'svelte/easing';
 
   export let data: { pathname: string };
   export let children: Snippet;
 
   $: direction = 'left' as 'left' | 'right';
   let prevPathname = data.pathname;
-  let params: FlyParams = { duration: 1000, opacity: 1, easing: expoOut };
+  let params: FlyParams = { duration: 800, opacity: 1, easing: cubicOut };
 
   $: if (prevPathname !== data.pathname) {
     if (data.pathname.startsWith(prevPathname)) direction = 'right';
