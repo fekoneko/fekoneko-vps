@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex h-0 w-full grow items-start justify-end sm:h-16">
-  <ArrowLink href="/details" direction="right" />
+  <ArrowLink href="/about" label="About" direction="right" />
 </div>
 
 <h1

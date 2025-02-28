@@ -1,22 +1,24 @@
 <script lang="ts">
   import ArrowRightIcon from '$lib/icons/ArrowRightIcon.svelte';
-  import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
-  interface $$Props extends HTMLAnchorAttributes {
-    direction: 'left' | 'right';
-  }
-
-  export let direction;
+  export let href: string;
+  export let label: string | null = null;
+  export let direction: 'left' | 'right';
 </script>
 
 <a
-  {...$$props}
+  {href}
   class={[
-    '-mx-44 -my-28 flex items-start justify-end rounded-full px-44 py-28 hover:*:text-neutral-600 focus:outline-none focus:*:text-neutral-600 sm:-mx-72 sm:-my-64 sm:px-72 sm:py-64',
-    direction === 'left' && 'hover:*:-translate-x-2 focus:*:-translate-x-2 sm:rotate-180',
-    direction === 'right' && 'hover:*:translate-x-2 focus:*:translate-x-2',
-    $$props.class,
+    'duration-400 xs:gap-2 -mx-44 -my-28 flex items-center gap-1 rounded-full px-44 py-28 text-neutral-400 transition-colors hover:text-neutral-600 focus:text-neutral-600 focus:outline-none',
+    direction === 'left' && '*:[svg]:rotate-180',
+    direction === 'left' && 'hover:*:[svg]:-translate-x-2 focus:*:[svg]:-translate-x-2',
+    direction === 'right' && 'hover:*:[svg]:translate-x-2 focus:*:[svg]:translate-x-2',
   ]}
 >
-  <ArrowRightIcon class="xs:size-16 size-14 text-neutral-300 transition-all duration-300" />
+  {#if label !== null}
+    <p class={['xs:text-2xl mb-1 text-xl', direction === 'left' && 'order-1']}>
+      {label}
+    </p>
+  {/if}
+  <ArrowRightIcon class="xs:size-16 duration-400 size-12 opacity-80 transition-transform" />
 </a>
