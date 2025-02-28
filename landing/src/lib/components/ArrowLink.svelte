@@ -1,9 +1,13 @@
 <script lang="ts">
   import ArrowRightIcon from '$lib/icons/ArrowRightIcon.svelte';
 
-  export let href: string;
-  export let label: string | null = null;
-  export let direction: 'left' | 'right';
+  export interface ArrowLinkProps {
+    href: string;
+    label?: string;
+    direction?: 'left' | 'right';
+  }
+
+  const { href, label, direction = 'left' }: ArrowLinkProps = $props();
 </script>
 
 <a
@@ -15,7 +19,7 @@
     direction === 'right' && 'hover:*:[svg]:translate-x-2 focus:*:[svg]:translate-x-2',
   ]}
 >
-  {#if label !== null}
+  {#if label}
     <p class={['xs:text-2xl mb-1 text-xl', direction === 'left' && 'order-1']}>
       {label}
     </p>

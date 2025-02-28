@@ -24,5 +24,6 @@
   href="https://github.com/fekoneko"
   target="_blank"
   class="-mx-20 -my-4 px-20 py-4 text-lg text-neutral-500 underline-offset-4 hover:text-neutral-700 hover:underline focus:text-neutral-700 focus:underline focus:outline-none"
-  >GitHub</a
 >
+  GitHub
+</a>

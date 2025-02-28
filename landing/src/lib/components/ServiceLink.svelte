@@ -1,9 +1,13 @@
 <script lang="ts">
   import colors from 'tailwindcss/colors';
 
-  export let href: string;
-  export let name: string;
-  export let color: keyof typeof colors;
+  export interface ServiceLinkProps {
+    href: string;
+    name: string;
+    color: keyof typeof colors;
+  }
+
+  const { href, name, color }: ServiceLinkProps = $props();
 </script>
 
 <a
