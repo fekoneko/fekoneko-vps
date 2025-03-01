@@ -10,7 +10,7 @@
   let isRightTransition = $state(false);
   let prevPathname: string;
 
-  $effect(() => {
+  $effect.pre(() => {
     isRightTransition = pathname.startsWith(prevPathname);
     prevPathname = pathname;
   });
@@ -20,8 +20,8 @@
   {#key pathname}
     <div
       class="absolute size-full p-4"
-      in:fly={{ x: isRightTransition ? '-100%' : '100%', ...TRANSITION_PARAMS }}
-      out:fly={{ x: isRightTransition ? '100%' : '-100%', ...TRANSITION_PARAMS }}
+      in:fly={{ x: isRightTransition ? '100%' : '-100%', ...TRANSITION_PARAMS }}
+      out:fly={{ x: isRightTransition ? '-100%' : '100%', ...TRANSITION_PARAMS }}
     >
       <div
         class="flex size-full flex-col items-center justify-center gap-8 overflow-y-auto overflow-x-hidden rounded-3xl bg-white p-8 shadow-xl shadow-rose-900/5 transition-all duration-300 sm:gap-12 md:p-12"
