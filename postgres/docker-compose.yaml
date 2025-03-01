@@ -1,0 +1,23 @@
+# docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    command: 
+    shm_size: 128mb
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      traefik:
+        ipv4_address: 172.20.0.7
+
+networks:
+  traefik:
+    name: traefik
+    external: true
+
