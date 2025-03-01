@@ -4,6 +4,10 @@
   import ServiceLink from '$lib/components/ServiceLink.svelte';
 </script>
 
+<svelte:head>
+  <title>fekoneko VPS</title>
+</svelte:head>
+
 <div class="flex h-0 w-full grow items-start justify-end sm:h-16">
   <ArrowLink href="/about" label="About" direction="right" />
 </div>
@@ -12,7 +16,7 @@
   class="xs:text-5xl text-center font-serif text-4xl font-bold text-pink-950 transition-all duration-300 sm:text-6xl"
 >
   Welcome to
-  <span class="text-pink-600">{MAIN_DOMAIN}</span>
+  <span class="whitespace-nowrap text-pink-600">fekoneko VPS</span>
 </h1>
 
 <section
