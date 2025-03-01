@@ -8,7 +8,7 @@
   <title>fekoneko VPS</title>
 </svelte:head>
 
-<div class="flex h-0 w-full grow items-start justify-end sm:h-16">
+<div class="flex h-8 w-full grow items-start justify-end sm:h-16">
   <ArrowLink href="/about" label="About" direction="right" />
 </div>
 
@@ -20,9 +20,10 @@
 </h1>
 
 <section
-  class="grid w-full max-w-[45rem] grow grid-cols-1 content-end gap-4 sm:grid-cols-3 sm:gap-6 md:gap-8"
+  class="grid w-full max-w-[45rem] grow grid-cols-1 content-end gap-4 sm:grid-cols-2 md:gap-6 lg:max-w-[55rem] lg:grid-cols-4"
 >
   <ServiceLink href="https://searxng.{MAIN_DOMAIN}" name="SearXNG" color="indigo" />
-  <ServiceLink href="https://traefik.{MAIN_DOMAIN}" name="Traefik" color="emerald" />
+  <ServiceLink href="https://nextcloud.{MAIN_DOMAIN}" name="NextCloud" color="sky" />
   <ServiceLink href="https://wireguard.{MAIN_DOMAIN}" name="WireGuard" color="fuchsia" />
+  <ServiceLink href="https://traefik.{MAIN_DOMAIN}" name="Traefik" color="emerald" />
 </section>
