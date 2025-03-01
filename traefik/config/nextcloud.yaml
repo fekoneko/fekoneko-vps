@@ -1,0 +1,24 @@
+http:
+  routers:
+    nextcloud:
+      entryPoints: https
+      rule: Host(`nextcloud.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.nextcloud.{{env "MAIN_DOMAIN_NAME"}}`)
+      service: nextcloud
+      middlewares:
+        - www-redirect@file
+        - nextcloud-secure-headers
+      tls:
+        certresolver: letsencrypt
+        domains:
+          - main: nextcloud.{{env "MAIN_DOMAIN_NAME"}}
+            sans: www.nextcloud.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    nextcloud:
+      loadBalancer:
+        servers:
+          - url: https://172.20.0.6:8080/
+  middlewares:
+    nextcloud-secure-headers:
+      headers:
+        hostsProxyHeaders: X-Forwarded-Host
+        referrerPolicy: same-origin
