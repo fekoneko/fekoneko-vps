@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres
-    command: 
+    restart: unless-stopped
     shm_size: 128mb
     env_file:
       - .env

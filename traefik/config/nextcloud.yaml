@@ -27,8 +27,8 @@ http:
         contentSecurityPolicy: upgrade-insecure-requests
         referrerPolicy: same-origin
     
-    # Create middleware to replace the path for well-known requests
-      # - "traefik.http.middlewares.nextcloud_known_dav.replacepathregex.regex=^/.well-known/(cal|card)dav"
-      # - "traefik.http.middlewares.nextcloud_known_dav.replacepathregex.replacement=/remote.php/dav/"
-      # - "traefik.http.middlewares.nextcloud_known_others.replacepathregex.regex=^/.well-known/(webfinger|nodeinfo)"
-      # - "traefik.http.middlewares.nextcloud_known_others.replacepathregex.replacement=/index.php/.well-known/$$1"
+    # TODO: middleware to replace the path for well-known requests
+    # - "traefik.http.middlewares.nextcloud_known_dav.replacepathregex.regex=^/.well-known/(cal|card)dav"
+    # - "traefik.http.middlewares.nextcloud_known_dav.replacepathregex.replacement=/remote.php/dav/"
+    # - "traefik.http.middlewares.nextcloud_known_others.replacepathregex.regex=^/.well-known/(webfinger|nodeinfo)"
+    # - "traefik.http.middlewares.nextcloud_known_others.replacepathregex.replacement=/index.php/.well-known/$$1"
