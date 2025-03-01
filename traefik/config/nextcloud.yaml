@@ -4,9 +4,9 @@ http:
       entryPoints: https
       rule: Host(`nextcloud.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.nextcloud.{{env "MAIN_DOMAIN_NAME"}}`)
       service: nextcloud
-      middlewares:
+      middlewares: 
         - www-redirect@file
-        - nextcloud-secure-headers
+        - nextcloud-headers
       tls:
         certresolver: letsencrypt
         domains:
@@ -16,9 +16,19 @@ http:
     nextcloud:
       loadBalancer:
         servers:
-          - url: https://172.20.0.6:8080/
+          - url: http://172.20.0.6:80/
+
   middlewares:
-    nextcloud-secure-headers:
+    nextcloud-headers:
       headers:
+        customRequestHeaders:
+          X-Forwarded-Proto: https
         hostsProxyHeaders: X-Forwarded-Host
+        contentSecurityPolicy: upgrade-insecure-requests
         referrerPolicy: same-origin
+    
+    # Create middleware to replace the path for well-known requests
+      # - "traefik.http.middlewares.nextcloud_known_dav.replacepathregex.regex=^/.well-known/(cal|card)dav"
+      # - "traefik.http.middlewares.nextcloud_known_dav.replacepathregex.replacement=/remote.php/dav/"
+      # - "traefik.http.middlewares.nextcloud_known_others.replacepathregex.regex=^/.well-known/(webfinger|nodeinfo)"
+      # - "traefik.http.middlewares.nextcloud_known_others.replacepathregex.replacement=/index.php/.well-known/$$1"

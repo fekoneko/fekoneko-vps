@@ -1,27 +1,30 @@
 services:
   nextcloud:
-    init: true
-    image: nextcloud/all-in-one:latest
-    container_name: nextcloud-aio-mastercontainer
+    image: nextcloud:latest
+    container_name: nextcloud
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      - APACHE_PORT=11000
-      - APACHE_IP_BINDING=0.0.0.0
-      - APACHE_ADDITIONAL_NETWORK=
-      - SKIP_DOMAIN_VALIDATION=false
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=172.20.0.7:5432
+      - TRUSTED_PROXIES=172.20.0.2
+      - OVERWRITECONDADDR=^172\.20\.0\.2$
+      - OVERWRITEWEBROOT=
+      - OVERWRITEPROTOCOL=https
+      - OVERWRITEHOST=nextcloud.${MAIN_DOMAIN_NAME}
+      - OVERWRITECLIURL=https://nextcloud.${MAIN_DOMAIN_NAME}
     volumes:
-      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data:/var/www/html
     networks:
       traefik:
         ipv4_address: 172.20.0.6
-
-volumes:
-  nextcloud_aio_mastercontainer:
-    name: nextcloud_aio_mastercontainer
 
 networks:
   traefik:
     name: traefik
     external: true
-
