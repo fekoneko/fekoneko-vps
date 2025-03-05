@@ -9,7 +9,7 @@ All the services are under _Traefik_ reverse-proxy and use their own dedicated D
 ### WEB:
 - Landing page - `<main_domain>`
 - SearXNG instance - `searxng.<main_domain>`
-- Nextcloud instance = `nextcloud.<main_domain>`
+- Nextcloud instance - `nextcloud.<main_domain>`
 - Wireguard panel - `wireguard.<main_domain>`
 - Traefik dashboard - `traefik.<main_domain>`
 
