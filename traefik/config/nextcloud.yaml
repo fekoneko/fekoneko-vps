@@ -6,6 +6,7 @@ http:
       service: nextcloud
       middlewares: 
         - www-redirect@file
+        - nextcloud-well-known-redirect
         - nextcloud-headers
       tls:
         certresolver: letsencrypt
@@ -19,6 +20,11 @@ http:
           - url: http://172.20.0.6:80/
 
   middlewares:
+    nextcloud-well-known-redirect:
+      redirectRegex:
+        permanent: true
+        regex: https://(.*)/.well-known/(?:card|cal)dav
+        replacement: https://${1}/remote.php/dav
     nextcloud-headers:
       headers:
         customRequestHeaders:

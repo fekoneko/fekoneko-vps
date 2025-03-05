@@ -13,11 +13,10 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_HOST=172.20.0.7:5432
       - TRUSTED_PROXIES=172.20.0.2
-      - OVERWRITECONDADDR=^172\.20\.0\.2$
-      - OVERWRITEWEBROOT=
       - OVERWRITEPROTOCOL=https
       - OVERWRITEHOST=nextcloud.${MAIN_DOMAIN_NAME}
       - OVERWRITECLIURL=https://nextcloud.${MAIN_DOMAIN_NAME}
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.${MAIN_DOMAIN_NAME}
     volumes:
       - ./data:/var/www/html
     networks:
