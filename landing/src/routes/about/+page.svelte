@@ -6,7 +6,7 @@
   <title>About @ fekoneko VPS</title>
 </svelte:head>
 
-<div class="max-[22rem]:**:[p]:hidden relative flex w-full items-center justify-start">
+<div class="relative flex w-full items-center justify-start max-[22rem]:**:[p]:hidden">
   <h2
     class="xs:px-5 xs:text-3xl pointer-events-none absolute mb-1 w-full px-1.5 text-right text-2xl font-bold text-neutral-600 sm:text-center"
   >
@@ -28,7 +28,7 @@
   </figure>
 
   <div class="flex max-w-[24rem] flex-col gap-5 font-serif tracking-wider sm:max-w-none sm:gap-4">
-    <p class="xs:text-2xl **:font-normal text-center text-[1.35rem] text-neutral-500">
+    <p class="xs:text-2xl text-center text-[1.35rem] text-neutral-500 **:font-normal">
       I&nbsp;love&nbsp;open&nbsp;source,&nbsp;open art&nbsp;and&nbsp;open&nbsp;people
     </p>
     <p class="text-center text-lg text-neutral-400">

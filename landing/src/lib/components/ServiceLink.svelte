@@ -12,10 +12,10 @@
 
 <a
   {href}
-  class="focus:*:ring-3 focus:*:ring-offset-3 not-hover:not-focus:*:opacity-80 block h-20 min-w-36 hover:*:-translate-y-1 hover:*:shadow-xl focus:outline-none sm:h-24"
+  class="block h-20 min-w-36 not-hover:not-focus:*:opacity-80 hover:*:-translate-y-1 hover:*:shadow-xl focus:outline-none focus:*:ring-3 focus:*:ring-offset-3 sm:h-24"
 >
   <div
-    class="duration-400 flex size-full flex-col items-center justify-center rounded-3xl border-2 ring-current transition-all"
+    class="flex size-full flex-col items-center justify-center rounded-3xl border-2 ring-current transition-all duration-400"
     style:background-color={colors[color][50]}
     style:border-color={colors[color][300]}
     style:color={colors[color][500]}

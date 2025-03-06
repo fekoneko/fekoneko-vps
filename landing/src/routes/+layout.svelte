@@ -24,7 +24,7 @@
       out:fly={{ x: isRightTransition ? '-100%' : '100%', ...TRANSITION_PARAMS }}
     >
       <div
-        class="flex size-full flex-col items-center justify-center gap-8 overflow-y-auto overflow-x-hidden rounded-3xl bg-white p-8 shadow-xl shadow-rose-900/5 transition-all duration-300 sm:gap-12 md:p-12"
+        class="flex size-full flex-col items-center justify-center gap-8 overflow-x-hidden overflow-y-auto rounded-3xl bg-white p-8 shadow-xl shadow-rose-900/5 transition-all duration-300 sm:gap-12 md:p-12"
       >
         {@render children()}
       </div>

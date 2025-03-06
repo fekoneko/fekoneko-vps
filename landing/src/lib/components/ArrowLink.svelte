@@ -13,7 +13,7 @@
 <a
   {href}
   class={[
-    'duration-400 xs:gap-2 -mx-44 -my-28 flex items-center gap-1 rounded-full px-44 py-28 text-neutral-400 transition-colors hover:text-neutral-600 focus:text-neutral-600 focus:outline-none',
+    'xs:gap-2 -mx-44 -my-28 flex items-center gap-1 rounded-full px-44 py-28 text-neutral-400 transition-colors duration-400 hover:text-neutral-600 focus:text-neutral-600 focus:outline-none',
     direction === 'left' && '*:[svg]:rotate-180',
     direction === 'left' && 'hover:*:[svg]:-translate-x-2 focus:*:[svg]:-translate-x-2',
     direction === 'right' && 'hover:*:[svg]:translate-x-2 focus:*:[svg]:translate-x-2',
@@ -24,5 +24,5 @@
       {label}
     </p>
   {/if}
-  <ArrowRightIcon class="xs:size-14 duration-400 size-12 opacity-60 transition-transform" />
+  <ArrowRightIcon class="xs:size-14 size-12 opacity-60 transition-transform duration-400" />
 </a>
