@@ -29,12 +29,10 @@
 
   <div class="flex max-w-[24rem] flex-col gap-5 font-serif tracking-wider sm:max-w-none sm:gap-4">
     <p class="xs:text-2xl **:font-normal text-center text-[1.35rem] text-neutral-500">
-      <span class="whitespace-nowrap">I love open source, open</span>{' '}
-      <span class="whitespace-nowrap">art and open people</span>
+      I&nbsp;love&nbsp;open&nbsp;source,&nbsp;open art&nbsp;and&nbsp;open&nbsp;people
     </p>
     <p class="text-center text-lg text-neutral-400">
-      <span class="whitespace-nowrap">Also I've heard that hosting</span>{' '}
-      <span class="whitespace-nowrap">everything yourself is cool</span>
+      Also&nbsp;I've&nbsp;heard&nbsp;that&nbsp;hosting everything&nbsp;yourself&nbsp;is&nbsp;cool
     </p>
   </div>
 </div>

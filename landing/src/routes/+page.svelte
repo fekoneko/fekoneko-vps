@@ -16,7 +16,7 @@
   class="xs:text-5xl text-center font-serif text-4xl font-bold text-pink-950 transition-all duration-300 sm:text-6xl"
 >
   Welcome to
-  <span class="whitespace-nowrap text-pink-600">fekoneko VPS</span>
+  <span class="text-pink-600">fekoneko&nbsp;VPS</span>
 </h1>
 
 <section
