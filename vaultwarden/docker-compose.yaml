@@ -1,0 +1,22 @@
+services:
+  searxng:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DOMAIN=${DOMAIN}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@172.20.0.7:5432/${POSTGRES_DB}
+      - ADMIN_TOKEN=${ADMIN_TOKEN}
+      - SIGNUPS_ALLOWED=false
+    volumes:
+      - ./data:/data
+    networks:
+      traefik:
+        ipv4_address: 172.20.0.8
+
+networks:
+  traefik:
+    name: traefik
+    external: true

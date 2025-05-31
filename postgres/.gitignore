@@ -1,2 +1,6 @@
+.DS_Store
+Thumbs.db
 .env
-/data
+.env.*
+!.env.example
+data/

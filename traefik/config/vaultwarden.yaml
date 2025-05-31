@@ -1,0 +1,17 @@
+http:
+  routers:
+    vaultwarden:
+      entryPoints: https
+      rule: Host(`vaultwarden.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.vaultwarden.{{env "MAIN_DOMAIN_NAME"}}`)
+      service: vaultwarden
+      middlewares: www-redirect@file
+      tls:
+        certresolver: letsencrypt
+        domains:
+          - main: vaultwarden.{{env "MAIN_DOMAIN_NAME"}}
+            sans: www.vaultwarden.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    vaultwarden:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.8:80/
