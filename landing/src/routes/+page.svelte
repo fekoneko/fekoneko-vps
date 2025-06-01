@@ -20,10 +20,11 @@
 </h1>
 
 <section
-  class="grid w-full max-w-[45rem] grow grid-cols-1 content-end gap-4 sm:grid-cols-2 md:gap-6 lg:max-w-[55rem] lg:grid-cols-4"
+  class="grid w-full max-w-[45rem] grow grid-cols-1 content-end gap-4 *:last:col-span-full sm:grid-cols-2 md:gap-6 lg:max-w-[70rem] lg:grid-cols-5 lg:*:last:col-span-1"
 >
   <ServiceLink href="https://searxng.{MAIN_DOMAIN}" name="SearXNG" color="indigo" />
   <ServiceLink href="https://nextcloud.{MAIN_DOMAIN}" name="Nextcloud" color="sky" />
-  <ServiceLink href="https://wireguard.{MAIN_DOMAIN}" name="WireGuard" color="fuchsia" />
+  <ServiceLink href="https://wireguard.{MAIN_DOMAIN}" name="WireGuard" color="orange" />
+  <ServiceLink href="https://vaultwarden.{MAIN_DOMAIN}" name="Vaultwarden" color="fuchsia" />
   <ServiceLink href="https://traefik.{MAIN_DOMAIN}" name="Traefik" color="emerald" />
 </section>
