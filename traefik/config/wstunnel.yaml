@@ -1,0 +1,14 @@
+http:
+  routers:
+    wstunnel:
+      entrypoints: https
+      service: wstunnel
+      rule: Host(`wstunnel.{{env "MAIN_DOMAIN_NAME"}}`)
+      tls:
+        certresolver: letsencrypt
+        domains: wstunnel.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    wstunnel:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.9:8000

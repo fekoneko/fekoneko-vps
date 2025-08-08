@@ -19,6 +19,8 @@ services:
       - net.ipv4.ip_forward=1
     volumes:
       - ./config:/etc/wireguard
+    devices:
+      - /dev/net/tun:/dev/net/tun
     networks:
       traefik:
         ipv4_address: 172.20.0.4

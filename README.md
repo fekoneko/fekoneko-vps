@@ -7,14 +7,28 @@ All the services are under _Traefik_ reverse-proxy and use their own dedicated D
 ## Available services
 
 ### WEB:
-- Landing page - `<main_domain>`
-- SearXNG instance - `searxng.<main_domain>`
-- Nextcloud instance - `nextcloud.<main_domain>`
-- Wireguard panel - `wireguard.<main_domain>`
-- Traefik dashboard - `traefik.<main_domain>`
+
+- Landing page - `$DOMAIN`
+
+- SearXNG - `searxng.$DOMAIN`
+
+- Nextcloud - `nextcloud.$DOMAIN`
+
+- Wireguard panel - `wireguard.$DOMAIN`
+
+- Traefik dashboard - `traefik.$DOMAIN`
+
+- Vaultwarden - `vaultwarden.$DOMAIN`
 
 ### Other:
-- Wireguard VPN - `:51820/udp`
+
+- Wireguard VPN - `$DOMAIN:51820/udp`
+
+- Wireguard VPN through WebSocket tunnel:
+
+```shell
+wstunnel client -L 'udp://51820:172.20.0.4:51820?timeout_sec=0' wss://wstunnel.$DOMAIN:443
+```
 
 ## Before composing containers
 

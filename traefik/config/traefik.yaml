@@ -12,7 +12,7 @@ entryPoints:
           scheme: https
   https:
     address: :443
-  udp:
+  wireguard:
     address: :51820/udp
 
 serversTransport:

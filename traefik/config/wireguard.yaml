@@ -19,7 +19,7 @@ http:
 udp:
   routers:
     wireguard:
-      entrypoints: udp
+      entrypoints: wireguard
       service: wireguard
   services:
     wireguard:

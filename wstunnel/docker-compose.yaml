@@ -1,0 +1,13 @@
+services:
+  wstunnel:
+    build: .
+    container_name: wstunnel
+    restart: unless-stopped
+    networks:
+      traefik:
+        ipv4_address: 172.20.0.9
+
+networks:
+  traefik:
+    name: traefik
+    external: true
