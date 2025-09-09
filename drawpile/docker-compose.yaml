@@ -1,0 +1,21 @@
+services:
+  drawpile:
+    image: drawpile/drawpile-srv:2.2
+    container_name: drawpile
+    restart: unless-stopped
+    build:
+      args:
+        --port: 27750
+        --config: /home/drawpile/config/config.ini
+        --sessions: /home/drawpile/data/sessions
+    volumes:
+      - ./config:/home/drawpile/config
+      - ./data:/home/drawpile/data
+    networks:
+      traefik:
+        ipv4_address: 172.20.0.10
+
+networks:
+  traefik:
+    name: traefik
+    external: true

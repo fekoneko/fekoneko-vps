@@ -9,26 +9,32 @@ All the services are under _Traefik_ reverse-proxy and use their own dedicated D
 ### WEB:
 
 - Landing page - `$DOMAIN`
-
-- SearXNG - `searxng.$DOMAIN`
-
-- Nextcloud - `nextcloud.$DOMAIN`
-
-- Wireguard panel - `wireguard.$DOMAIN`
-
-- Traefik dashboard - `traefik.$DOMAIN`
-
-- Vaultwarden - `vaultwarden.$DOMAIN`
+- [SearXNG](https://github.com/searxng) - `searxng.$DOMAIN`
+- [Nextcloud](https://github.com/nextcloud) - `nextcloud.$DOMAIN`
+- [Wireguard panel](https://github.com/wg-easy/wg-easy) - `wireguard.$DOMAIN`
+- [Traefik](https://github.com/traefik/traefik) dashboard - `traefik.$DOMAIN`
+- [Vaultwarden](https://github.com/dani-garcia/vaultwarden) - `vaultwarden.$DOMAIN`
 
 ### Other:
 
-- Wireguard VPN - `$DOMAIN:51820/udp`
-
-- Wireguard VPN through WebSocket tunnel:
+- [Wireguard VPN](https://github.com/wireguard) - `$DOMAIN:51820/udp`
+- Wireguard VPN through [WebSocket tunnel](https://github.com/erebe/wstunnel):
 
 ```shell
+# This will need a DNS server or cache to be available
 wstunnel client -L 'udp://51820:172.20.0.4:51820?timeout_sec=0' wss://wstunnel.$DOMAIN:443
+
+# This will allow to connect directly using IP address
+# Preferrable when DNS is done througn WireGuard as well
+nohup wstunnel client \
+  --local-to-remote udp://51820:172.20.0.4:51820?timeout_sec=0 \
+  --tls-verify-certificate \
+  --tls-sni-override wstunnel.$DOMAIN \
+  --http-headers Host:wstunnel.$DOMAIN \
+  wss://$IPV4:443 &
 ```
+
+- [Drawpile](https://github.com/drawpile/Drawpile) server - `$DOMAIN:27750/tcp`
 
 ## Before composing containers
 

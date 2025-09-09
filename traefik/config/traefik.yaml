@@ -12,6 +12,8 @@ entryPoints:
           scheme: https
   https:
     address: :443
+  drawpile:
+    address: :27750
   wireguard:
     address: :51820/udp
 
