@@ -3,9 +3,12 @@ services:
     image: drawpile/drawpile-srv:2.2
     container_name: drawpile
     restart: unless-stopped
+    env_file:
+      - .env
     command: |
       --port 27750
       --config /home/drawpile/config/config.ini
+      --local-host drawpile.${MAIN_DOMAIN_NAME}
     volumes:
       - ./config:/home/drawpile/config
     networks:
