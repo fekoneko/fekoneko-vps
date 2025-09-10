@@ -34,7 +34,7 @@ nohup wstunnel client \
   wss://$IPV4:443 &
 ```
 
-- [Drawpile](https://github.com/drawpile/Drawpile) server - `$DOMAIN:27750/tcp`
+- [Drawpile](https://github.com/drawpile/Drawpile) server - `drawpile.$DOMAIN:27750/tcp`
 
 ## Before composing containers
 

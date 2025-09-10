@@ -3,15 +3,25 @@ tcp:
     drawpile:
       entrypoints: drawpile
       rule: HostSNI(`*`)
-      # TODO: figure out TLS
-      # rule: HostSNI(`drawpile.{{env "MAIN_DOMAIN_NAME"}}`)
       service: drawpile
-      # TODO: figure out TLS
-      # tls:
-      #   certresolver: letsencrypt
-      #   domains: drawpile.{{env "MAIN_DOMAIN_NAME"}}
   services:
     drawpile:
       loadBalancer:
         servers:
           - address: 172.20.0.10:27750
+
+http:
+  routers:
+    drawpile-ws:
+      entrypoints: https
+      service: drawpile-ws
+      rule: Host(`drawpile.{{env "MAIN_DOMAIN_NAME"}}`)
+      tls:
+        certresolver: letsencrypt
+        domains: drawpile.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    drawpile-ws:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.10:443
+

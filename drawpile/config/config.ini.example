@@ -1,0 +1,26 @@
+[config]
+serverTitle = fekoneko drawpile server
+welcomeMessage = Welcome to fekoneko drawpile server!
+ruleText = <server rules>
+loginInfoUrl = "Ask fekoneko directly if you want to host a session"
+forceNsfm = true
+allowGuestHosts = false
+allowGuestWebHosts = false
+mandatoryLookup = true
+announceWhitelist = true
+requireMatchingHost = true
+preferWebSockets = true
+sessionSizeLimit = 200mb
+sessionCountLimit = 10
+sessionUserLimit = 254
+persistence = false
+archive = false
+
+[announceWhitelist]
+
+[ipbans]
+
+[users]
+# The most reliable way to get passoword config field is to create the user from
+# drawpile-srv GUI locally and find the corresponding value inside SQLite database
+fekoneko:<passoword config>:MOD,HOST

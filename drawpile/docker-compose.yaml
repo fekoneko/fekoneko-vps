@@ -7,6 +7,7 @@ services:
       - .env
     command: |
       --port 27750
+      --websocket-port 443
       --config /home/drawpile/config/config.ini
       --local-host drawpile.${MAIN_DOMAIN_NAME}
     volumes:
