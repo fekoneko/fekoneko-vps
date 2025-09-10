@@ -1,7 +1,7 @@
 tcp:
   routers:
     drawpile:
-      entrypoints: drawpile
+      entryPoints: drawpile
       rule: HostSNI(`*`)
       service: drawpile
   services:
@@ -13,7 +13,7 @@ tcp:
 http:
   routers:
     drawpile-ws:
-      entrypoints: https
+      entryPoints: web-secure
       service: drawpile-ws
       rule: Host(`drawpile.{{env "MAIN_DOMAIN_NAME"}}`)
       tls:

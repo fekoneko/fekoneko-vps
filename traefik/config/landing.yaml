@@ -1,7 +1,7 @@
 http:
   routers:
     landing:
-      entryPoints: https
+      entryPoints: web-secure
       rule: Host(`{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.{{env "MAIN_DOMAIN_NAME"}}`)
       service: landing
       middlewares: www-redirect@file

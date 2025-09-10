@@ -1,7 +1,7 @@
 http:
   routers:
     searxng:
-      entryPoints: https
+      entryPoints: web-secure
       rule: Host(`searxng.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.searxng.{{env "MAIN_DOMAIN_NAME"}}`)
       service: searxng
       middlewares: www-redirect@file

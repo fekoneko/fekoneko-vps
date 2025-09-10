@@ -1,7 +1,7 @@
 http:
   routers:
     vaultwarden:
-      entryPoints: https
+      entryPoints: web-secure
       rule: Host(`vaultwarden.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.vaultwarden.{{env "MAIN_DOMAIN_NAME"}}`)
       service: vaultwarden
       middlewares: www-redirect@file

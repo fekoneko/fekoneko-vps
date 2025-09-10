@@ -1,7 +1,7 @@
 http:
   routers:
     nextcloud:
-      entryPoints: https
+      entryPoints: web-secure
       rule: Host(`nextcloud.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.nextcloud.{{env "MAIN_DOMAIN_NAME"}}`)
       service: nextcloud
       middlewares: 

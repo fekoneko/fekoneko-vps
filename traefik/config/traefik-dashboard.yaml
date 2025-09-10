@@ -1,7 +1,7 @@
 http:
   routers:
     traefik:
-      entryPoints: https
+      entryPoints: web-secure
       rule: Host(`traefik.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.traefik.{{env "MAIN_DOMAIN_NAME"}}`)
       service: api@internal
       middlewares:

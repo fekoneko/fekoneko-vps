@@ -1,7 +1,7 @@
 http:
   routers:
     wireguard-frontend:
-      entrypoints: https
+      entryPoints: web-secure
       rule: Host(`wireguard.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.wireguard.{{env "MAIN_DOMAIN_NAME"}}`)
       service: wireguard-frontend
       middlewares: www-redirect@file
@@ -19,7 +19,7 @@ http:
 udp:
   routers:
     wireguard:
-      entrypoints: wireguard
+      entryPoints: wireguard
       service: wireguard
   services:
     wireguard:

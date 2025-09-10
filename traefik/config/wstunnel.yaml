@@ -1,7 +1,7 @@
 http:
   routers:
     wstunnel:
-      entrypoints: https
+      entryPoints: web-secure
       service: wstunnel
       rule: Host(`wstunnel.{{env "MAIN_DOMAIN_NAME"}}`)
       tls:
