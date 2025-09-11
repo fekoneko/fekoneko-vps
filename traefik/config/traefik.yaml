@@ -23,8 +23,8 @@ serversTransport:
 certificatesResolvers:
   letsencrypt:
     acme:
-      # Uncomment if testing something that could lead to many requests
-      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      # Use if testing something that could lead to many requests to letsencrypt:
+      # https://acme-staging-v02.api.letsencrypt.org/directory
       storage: acme.json
       httpChallenge:
         entryPoint: web

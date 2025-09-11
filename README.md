@@ -8,12 +8,12 @@ All the services are under _Traefik_ reverse-proxy and use their own dedicated D
 
 ### WEB:
 
-- Landing page - `$DOMAIN`
-- [SearXNG](https://github.com/searxng) - `searxng.$DOMAIN`
-- [Nextcloud](https://github.com/nextcloud) - `nextcloud.$DOMAIN`
-- [Wireguard panel](https://github.com/wg-easy/wg-easy) - `wireguard.$DOMAIN`
-- [Traefik](https://github.com/traefik/traefik) dashboard - `traefik.$DOMAIN`
-- [Vaultwarden](https://github.com/dani-garcia/vaultwarden) - `vaultwarden.$DOMAIN`
+- Landing page - `https://$DOMAIN`
+- [SearXNG](https://github.com/searxng) - `https://searxng.$DOMAIN`
+- [Nextcloud](https://github.com/nextcloud) - `https://nextcloud.$DOMAIN`
+- [Wireguard panel](https://github.com/wg-easy/wg-easy) - `https://wireguard.$DOMAIN`
+- [Traefik](https://github.com/traefik/traefik) dashboard - `https://traefik.$DOMAIN`
+- [Vaultwarden](https://github.com/dani-garcia/vaultwarden) - `https://vaultwarden.$DOMAIN`
 
 ### Other:
 
@@ -35,6 +35,7 @@ nohup wstunnel client \
 ```
 
 - [Drawpile](https://github.com/drawpile/Drawpile) server - `drawpile.$DOMAIN:27750/tcp`
+- [Anki](https://github.com/ankitects/anki) sync server - `https://anki.$DOMAIN`
 
 ## Before composing containers
 

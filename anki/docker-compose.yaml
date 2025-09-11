@@ -1,0 +1,19 @@
+services:
+  anki:
+    image: jeankhawand/anki-sync-server:25.07
+    container_name: anki
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - SYNC_USER1=${LOGIN}:${PASSWORD}
+    volumes:
+      - ./data:/anki_data
+    networks:
+      traefik:
+        ipv4_address: 172.20.0.11
+
+networks:
+  traefik:
+    name: traefik
+    external: true

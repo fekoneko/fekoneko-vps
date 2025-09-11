@@ -1,0 +1,14 @@
+http:
+  routers:
+    anki:
+      entryPoints: web-secure
+      rule: Host(`anki.{{env "MAIN_DOMAIN_NAME"}}`)
+      service: anki
+      tls:
+        certresolver: letsencrypt
+        domains: anki.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    anki:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.11:8080/
