@@ -26,12 +26,12 @@ wstunnel client -L 'udp://51820:172.20.0.4:51820?timeout_sec=0' wss://wstunnel.$
 
 # This will allow to connect directly using IP address
 # Preferrable when DNS is done througn WireGuard as well
-nohup wstunnel client \
+wstunnel client \
   --local-to-remote udp://51820:172.20.0.4:51820?timeout_sec=0 \
   --tls-verify-certificate \
   --tls-sni-override wstunnel.$DOMAIN \
   --http-headers Host:wstunnel.$DOMAIN \
-  wss://$IPV4:443 &
+  wss://$IPV4:443
 ```
 
 - [Drawpile](https://github.com/drawpile/Drawpile) server - `drawpile.$DOMAIN:27750/tcp`
