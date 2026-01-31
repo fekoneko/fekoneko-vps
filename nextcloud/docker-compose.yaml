@@ -1,6 +1,6 @@
 services:
   nextcloud:
-    image: nextcloud:latest
+    image: nextcloud:32.0.5-apache
     container_name: nextcloud
     restart: unless-stopped
     env_file:

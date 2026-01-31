@@ -11,7 +11,7 @@ services:
       --config /home/drawpile/config/config.ini
       --local-host drawpile.${MAIN_DOMAIN_NAME}
     volumes:
-      - ./config:/home/drawpile/config
+      - ./config:/home/drawpile/config:ro
     networks:
       traefik:
         ipv4_address: 172.20.0.10
