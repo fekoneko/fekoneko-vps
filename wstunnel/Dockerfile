@@ -1,10 +1,10 @@
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 WORKDIR /tmp/wstunnel
 
 RUN apt update && apt-get upgrade -y
 RUN apt-get install wget -y
-RUN wget https://github.com/erebe/wstunnel/releases/download/v10.4.4/wstunnel_10.4.4_linux_amd64.tar.gz
-RUN tar -xvzf wstunnel_10.4.4_linux_amd64.tar.gz
+RUN wget https://github.com/erebe/wstunnel/releases/download/v10.5.2/wstunnel_10.5.2_linux_amd64.tar.gz
+RUN tar -xvzf wstunnel_10.5.2_linux_amd64.tar.gz
 RUN chmod +x wstunnel
 RUN cp wstunnel /usr/local/bin/wstunnel
 

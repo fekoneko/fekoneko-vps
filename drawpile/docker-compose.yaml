@@ -1,6 +1,6 @@
 services:
   drawpile:
-    image: drawpile/drawpile-srv:2.2
+    image: drawpile/drawpile-srv:2.3.0
     container_name: drawpile
     restart: unless-stopped
     env_file:

@@ -63,8 +63,14 @@ latest_semver() {
 
 # Usage: print_tag <label> <<< <semvers>
 print_tag() {
-  echo -n $'  '"$1"$'\n   └╴ '
-  latest_semver || return 1
+  echo "  $1"
+  is_first_line=true
+  while read -r semver; do
+    if [[ $is_first_line == true ]]
+      then echo "   └╴ $semver"; is_first_line=false
+      else echo "      $semver"
+    fi
+  done < <(latest_semver) || return 1
 }
 
 # Usage: run

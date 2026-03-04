@@ -1,6 +1,6 @@
 services:
   searxng:
-    image: searxng/searxng:2025.7.22-5cbf422
+    image: searxng/searxng:2026.3.3-b5c1c2804
     container_name: searxng
     restart: unless-stopped
     env_file:
