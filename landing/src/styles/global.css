@@ -3,7 +3,7 @@
   color: var(--color-text-primary);
   background-color: var(--color-background-secondary);
 
-  font-family: sans-serif;
+  font-family: "Noto Sans", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -30,4 +30,9 @@ body {
   margin: 0;
   min-width: 36rem;
   min-height: 100vh;
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("/noto-sans.ttf") format("truetype");
 }
