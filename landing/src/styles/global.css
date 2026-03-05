@@ -1,0 +1,17 @@
+:root {
+  color-scheme: dark;
+  color: #cdcdcd;
+  background-color: #222226;
+
+  font-family: sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 20rem;
+  min-height: 100vh;
+}

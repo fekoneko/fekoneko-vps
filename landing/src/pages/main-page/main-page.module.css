@@ -1,0 +1,24 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  .avatarFigure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .avatarImage {
+      width: 15rem;
+      height: 15rem;
+      border-radius: 2rem;
+    }
+
+    .avatarCaption {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  }
+}
