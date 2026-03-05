@@ -1,14 +1,58 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  height: 4.5rem;
-  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  background-color: var(--color-background-secondary);
+  border-bottom: 1px solid var(--color-border-secondary);
+  transition: box-shadow var(--transition-fast);
 
-  .title {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: bold;
+  &[data-with-shadow="true"] {
+    box-shadow: 0 0 2rem var(--color-shadow);
+  }
+
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    max-width: 76rem;
+    height: 4.75rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+
+    .title {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .socialLinksList {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+
+      .socialLinkItem {
+        display: block;
+
+        .socialLink {
+          display: flex;
+          align-items: center;
+          height: 4.5rem;
+          padding: 0 1rem;
+          text-decoration: none;
+          color: var(--color-text-primary);
+          transition: color var(--transition-fast);
+
+          &:hover {
+            color: var(--color-text-accent);
+            text-decoration: underline;
+          }
+        }
+
+        &:last-child .socialLink {
+          padding-right: 0;
+        }
+      }
+    }
   }
 }
