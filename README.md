@@ -34,7 +34,7 @@ wstunnel client \
   wss://$IPV4:443
 ```
 
-- [Drawpile](https://github.com/drawpile/Drawpile) server - `drawpile.$DOMAIN:27750/tcp`
+- [Drawpile](https://github.com/drawpile/Drawpile) server - `wss://drawpile.$DOMAIN` | `drawpile.$DOMAIN:27750/tcp`
 - [Anki](https://github.com/ankitects/anki) sync server - `https://anki.$DOMAIN`
 
 ## Before composing containers
