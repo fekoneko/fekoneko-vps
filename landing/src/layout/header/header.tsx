@@ -15,7 +15,7 @@ export const Header: FC = () => {
     <header className={classes.header} data-with-shadow={withShadow}>
       <div className={classes.inner}>
         <h1 role="banner" className={classes.title}>
-          fekoneko VPS
+          fekoneko vps
         </h1>
 
         <nav>

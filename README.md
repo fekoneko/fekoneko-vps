@@ -1,6 +1,6 @@
-# fekoneko VPS
+# fekoneko vps
 
-Here are all Docker containers that I run on my VPS.
+Here are all Docker containers that I run on my vps.
 
 All the services are under _Traefik_ reverse-proxy and use their own dedicated Docker network (`traefik`). I also prefer making dynamic file configs over container labels for Traefik to keep them in one place, clean and readable.
 

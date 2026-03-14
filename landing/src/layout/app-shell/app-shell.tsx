@@ -3,7 +3,7 @@ import { MainPage } from "@/pages/main-page";
 import { FC } from "react";
 import classes from "./app-shell.module.css";
 
-export const App: FC = () => (
+export const AppShell: FC = () => (
   <div>
     <Header />
 
