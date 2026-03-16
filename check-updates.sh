@@ -129,10 +129,10 @@ run() {
 
   echo $'\n# Latest tags for Dockerfiles'
 
-  # landing + video-lobby (bun)
+  # landing + videoroom (bun)
   fetch_tags_dockerhub 'oven' 'bun' \
     | grep '^[0-9.]*$' \
-    | print_tag 'landing + video-lobby (oven/bun)' \
+    | print_tag 'landing + videoroom (oven/bun)' \
     || exit 1
 
   # wstunnel (ubuntu)

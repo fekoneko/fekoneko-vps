@@ -16,7 +16,7 @@ const isVideoState = (state: unknown): state is VideoState =>
   !Number.isNaN(state.currentTime);
 
 export interface UseVideoWsConfig {
-  lobbyId: string;
+  roomId: string;
   onStateReceived?: (state: () => VideoState) => void | Promise<void>;
   onClientsCountReceived?: (clientsCount: number) => void | Promise<void>;
 }
@@ -50,11 +50,11 @@ export const useWebSocket = (config: UseVideoWsConfig): UseVideoWsReturn => {
   useEffect(() => {
     const send = async () => {
       const ws = await waitWsOpen();
-      ws.send(JSON.stringify({ type: "join", lobbyId: config.lobbyId }));
+      ws.send(JSON.stringify({ type: "join", roomId: config.roomId }));
     };
     send();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config.lobbyId]);
+  }, [config.roomId]);
 
   useEffect(() => {
     const ws = getWs();

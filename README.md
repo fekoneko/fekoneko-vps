@@ -14,7 +14,7 @@ All the services are under _Traefik_ reverse-proxy and use their own dedicated D
 - [Wireguard panel](https://github.com/wg-easy/wg-easy) - `https://wireguard.$DOMAIN`
 - [Traefik](https://github.com/traefik/traefik) dashboard - `https://traefik.$DOMAIN`
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) - `https://vaultwarden.$DOMAIN`
-- fekoneko video lobby - `https://video-lobby.$DOMAIN`
+- fekoneko videoroom - `https://videoroom.$DOMAIN`
 
 ### Other:
 

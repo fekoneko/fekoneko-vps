@@ -15,38 +15,37 @@ const isVideoState = (state: unknown): state is VideoState =>
   typeof state.currentTime === "number" &&
   !Number.isNaN(state.currentTime);
 
-interface Lobby {
+interface Room {
   id: string;
   state: VideoState;
   clients: Set<ServerWebSocket>;
 }
 
-const lobbyById = new Map<string, Lobby>();
-const lobbyByClient = new Map<ServerWebSocket, Lobby>();
+const roomById = new Map<string, Room>();
+const roomByClient = new Map<ServerWebSocket, Room>();
 
 const handleJoin = (ws: ServerWebSocket, data: unknown) => {
-  const isDataValid = !!data && typeof data === "object" && "lobbyId" in data;
+  const isDataValid = !!data && typeof data === "object" && "roomId" in data;
   if (!isDataValid) throw new Error(`Invalid message: ${JSON.stringify(data)}`);
-  const { lobbyId } = data;
+  const { roomId } = data;
 
-  if (typeof lobbyId !== "string")
-    throw new Error(`Invalid lobby ID: ${lobbyId}`);
+  if (typeof roomId !== "string") throw new Error(`Invalid room ID: ${roomId}`);
 
-  leaveLobby(ws);
+  leaveRoom(ws);
 
-  let lobby = lobbyById.get(lobbyId);
-  if (!lobby) {
+  let room = roomById.get(roomId);
+  if (!room) {
     const state: VideoState = { paused: true, currentTime: 0 };
-    lobby = { id: lobbyId, state, clients: new Set() };
-    lobbyById.set(lobbyId, lobby);
+    room = { id: roomId, state, clients: new Set() };
+    roomById.set(roomId, room);
   }
 
-  lobby.clients.add(ws);
-  lobbyByClient.set(ws, lobby);
-  sendState(ws, lobby.state);
-  lobby.clients.forEach((c) => sendClientCount(c, lobby.clients.size));
+  room.clients.add(ws);
+  roomByClient.set(ws, room);
+  sendState(ws, room.state);
+  room.clients.forEach((c) => sendClientCount(c, room.clients.size));
 
-  return lobby;
+  return room;
 };
 
 const handleSetState = (ws: ServerWebSocket, data: unknown) => {
@@ -61,26 +60,26 @@ const handleSetState = (ws: ServerWebSocket, data: unknown) => {
   if (!time || typeof time !== "number")
     throw new Error(`Invalid time: ${time}`);
 
-  const lobby = lobbyByClient.get(ws);
-  if (!lobby) throw new Error("Has not joined a lobby");
+  const room = roomByClient.get(ws);
+  if (!room) throw new Error("Has not joined a room");
 
   const correctedState: VideoState = { ...state };
   if (correctedState.paused === false)
     correctedState.currentTime += Date.now() - time;
 
-  lobby.state = correctedState;
-  lobby.clients.forEach((c) => c !== ws && sendState(c, correctedState));
+  room.state = correctedState;
+  room.clients.forEach((c) => c !== ws && sendState(c, correctedState));
 };
 
-const leaveLobby = (ws: ServerWebSocket) => {
-  const lobby = lobbyByClient.get(ws);
-  if (!lobby) return;
+const leaveRoom = (ws: ServerWebSocket) => {
+  const room = roomByClient.get(ws);
+  if (!room) return;
 
-  lobby.clients.delete(ws);
-  lobbyByClient.delete(ws);
+  room.clients.delete(ws);
+  roomByClient.delete(ws);
 
-  if (!lobby.clients.size) lobbyById.delete(lobby.id);
-  else lobby.clients.forEach((c) => sendClientCount(c, lobby.clients.size));
+  if (!room.clients.size) roomById.delete(room.id);
+  else room.clients.forEach((c) => sendClientCount(c, room.clients.size));
 };
 
 const sendState = (ws: ServerWebSocket, state: VideoState) => {
@@ -138,7 +137,7 @@ const server = Bun.serve({
       console.log(
         `WebSocket connection closed: ${ws.remoteAddress}, code: ${code}, message: ${message}`,
       );
-      leaveLobby(ws);
+      leaveRoom(ws);
     },
   },
 });

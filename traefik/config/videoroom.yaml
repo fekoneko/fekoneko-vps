@@ -1,0 +1,17 @@
+http:
+  routers:
+    videoroom:
+      entryPoints: web-secure
+      rule: Host(`videoroom.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.videoroom.{{env "MAIN_DOMAIN_NAME"}}`)
+      service: videoroom
+      middlewares: www-redirect@file
+      tls:
+        certresolver: letsencrypt
+        domains:
+          - main: videoroom.{{env "MAIN_DOMAIN_NAME"}}
+            sans: www.videoroom.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    videoroom:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.12:3000/

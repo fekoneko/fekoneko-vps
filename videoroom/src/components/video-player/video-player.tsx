@@ -6,7 +6,7 @@ export const VideoPlayer: FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [lobbyId, setLobbyId] = useState("");
+  const [roomId, setRoomId] = useState("");
   const [isVideoLoading, setIsVideoLoading] = useState(false);
   const [clientsCount, setClientsCount] = useState<number>(1);
   const sentStateRef = useRef<VideoState | null>(null);
@@ -27,7 +27,7 @@ export const VideoPlayer: FC = () => {
   }, []);
 
   const { sendState } = useWebSocket({
-    lobbyId,
+    roomId,
     onStateReceived: async (getState) => {
       const video = videoRef.current;
       if (!video) return;
@@ -93,14 +93,14 @@ export const VideoPlayer: FC = () => {
           />
         </button>
 
-        <div className={classes.lobbyControls}>
-          <label className={classes.lobbyIdControl}>
-            <span>Lobby ID:</span>
+        <div className={classes.roomControls}>
+          <label className={classes.roomIdControl}>
+            <span>Room ID:</span>
 
             <input
               type="text"
               placeholder="Paste existing to join or make your own"
-              onChange={(e) => setLobbyId(e.target.value)}
+              onChange={(e) => setRoomId(e.target.value)}
             />
           </label>
 

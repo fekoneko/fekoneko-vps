@@ -47,14 +47,14 @@
       }
     }
 
-    .lobbyControls {
+    .roomControls {
       display: flex;
       gap: 0.75rem;
       flex-wrap: nowrap;
       flex: 1;
       min-width: min(100%, 21.5rem);
 
-      .lobbyIdControl {
+      .roomIdControl {
         display: flex;
         align-items: center;
         gap: 0.5rem;

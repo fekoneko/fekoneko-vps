@@ -1,7 +1,7 @@
 services:
-  video-lobby:
+  videoroom:
     build: .
-    container_name: video-lobby
+    container_name: videoroom
     restart: unless-stopped
     networks:
       traefik:

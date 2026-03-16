@@ -95,11 +95,11 @@ export const SERVICES: Service[] = [
     ],
   },
   {
-    title: "Video Lobby",
-    names: ["video-lobby"],
+    title: "Video Room",
+    names: ["videoroom"],
     addresses: [
       {
-        address: `https://video-lobby.${DOMAIN}`,
+        address: `https://videoroom.${DOMAIN}`,
         browserAccessible: true,
         description: "Web UI",
       },
