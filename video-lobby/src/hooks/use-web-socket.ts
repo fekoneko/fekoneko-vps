@@ -1,5 +1,5 @@
 import { WS_URL } from "@/config/environment";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export interface VideoState {
   paused: boolean;
@@ -25,15 +25,40 @@ export interface UseVideoWsReturn {
   sendState: (state: VideoState) => void;
 }
 
-const WS = new WebSocket(WS_URL);
-
 export const useWebSocket = (config: UseVideoWsConfig): UseVideoWsReturn => {
-  useEffect(
-    () => WS.send(JSON.stringify({ type: "join", lobbyId: config.lobbyId })),
-    [config.lobbyId],
-  );
+  const wsRef = useRef<WebSocket | null>(null);
+
+  const getWs = () => {
+    if (wsRef.current === null) wsRef.current = new WebSocket(WS_URL);
+    return wsRef.current;
+  };
+
+  const waitWsOpen = async () => {
+    const ws = getWs();
+
+    if (ws.readyState === WebSocket.CONNECTING)
+      await new Promise((resolve, reject) => {
+        ws.addEventListener("open", resolve);
+        ws.addEventListener("error", reject);
+      });
+    else if (ws.readyState !== WebSocket.OPEN)
+      throw new Error(`WebSocket status is ${ws.readyState}`);
+
+    return ws;
+  };
 
   useEffect(() => {
+    const send = async () => {
+      const ws = await waitWsOpen();
+      ws.send(JSON.stringify({ type: "join", lobbyId: config.lobbyId }));
+    };
+    send();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config.lobbyId]);
+
+  useEffect(() => {
+    const ws = getWs();
+
     const handleMessage = ({ data: rawData }: MessageEvent<string>) => {
       const data = JSON.parse(rawData);
 
@@ -67,13 +92,17 @@ export const useWebSocket = (config: UseVideoWsConfig): UseVideoWsReturn => {
         throw new Error(`Unknown message type: ${data?.type}`);
       }
     };
-    WS.addEventListener("message", handleMessage);
+    ws.addEventListener("message", handleMessage);
 
-    return () => WS.removeEventListener("message", handleMessage);
+    return () => ws.removeEventListener("message", handleMessage);
   }, [config]);
 
   const sendState = (state: VideoState) => {
-    WS.send(JSON.stringify({ type: "state", state, time: Date.now() }));
+    const send = async () => {
+      const ws = await waitWsOpen();
+      ws.send(JSON.stringify({ type: "state", state, time: Date.now() }));
+    };
+    send();
   };
 
   return { sendState };
