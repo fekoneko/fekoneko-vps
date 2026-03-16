@@ -1,0 +1,13 @@
+services:
+  landing:
+    build: .
+    container_name: video-lobby
+    restart: unless-stopped
+    networks:
+      traefik:
+        ipv4_address: 172.20.0.12
+
+networks:
+  traefik:
+    name: traefik
+    external: true

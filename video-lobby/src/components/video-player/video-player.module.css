@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .video {
+    background-color: var(--color-background-primary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: 0.5rem;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    .fileControl {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      width: 21.5rem;
+      min-width: min(100%, 21.5rem);
+      height: 2rem;
+      padding: 0 0.5rem;
+      font-size: 0.825rem;
+      color: var(--color-text-primary);
+      background-color: var(--color-background-primary);
+      border: 1px solid var(--color-border-primary);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition:
+        color var(--transition-fast),
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
+
+      &:hover {
+        color: var(--color-text-accent);
+        background-color: var(--color-background-accent);
+        border-color: var(--color-border-accent);
+      }
+
+      span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .lobbyControls {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: nowrap;
+      flex: 1;
+      min-width: min(100%, 21.5rem);
+
+      .lobbyIdControl {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: 1;
+        width: 21.5rem;
+        min-width: 0;
+        height: 2rem;
+        padding: 0 0.125rem 0 0.5rem;
+        font-size: 0.825rem;
+        color: var(--color-text-primary);
+        background-color: var(--color-background-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: 0.5rem;
+
+        span {
+          white-space: nowrap;
+        }
+
+        input {
+          flex: 1;
+          min-width: 0;
+          height: 1.75rem;
+          padding: 0 0.5rem;
+          font-size: inherit;
+          color: inherit;
+          background-color: var(--color-background-secondary);
+          border: 1px solid var(--color-border-primary);
+          border-radius: 0.375rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &::placeholder {
+            color: var(--color-text-secondary);
+          }
+        }
+      }
+
+      .clientsCount {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+        height: 2rem;
+        padding: 0 0.5rem;
+        font-size: 0.825rem;
+        color: var(--color-text-primary);
+        background-color: var(--color-background-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: 0.5rem;
+
+        span {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}

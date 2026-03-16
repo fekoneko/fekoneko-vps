@@ -95,13 +95,13 @@ export const SERVICES: Service[] = [
     ],
   },
   {
-    title: "Landing Page",
-    names: ["landing"],
+    title: "Video Lobby",
+    names: ["video-lobby"],
     addresses: [
       {
-        address: `https://${DOMAIN}`,
+        address: `https://video-lobby.${DOMAIN}`,
         browserAccessible: true,
-        description: "The page you're currently on",
+        description: "Web UI",
       },
     ],
   },

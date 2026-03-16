@@ -1,0 +1,17 @@
+http:
+  routers:
+    landing:
+      entryPoints: web-secure
+      rule: Host(`video-lobby.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.video-lobby.{{env "MAIN_DOMAIN_NAME"}}`)
+      service: landing
+      middlewares: www-redirect@file
+      tls:
+        certresolver: letsencrypt
+        domains:
+          - main: 'video-lobby.{{env "MAIN_DOMAIN_NAME"}}'
+            sans: www.video-lobby.{{env "MAIN_DOMAIN_NAME"}}
+  services:
+    landing:
+      loadBalancer:
+        servers:
+          - url: http://172.20.0.12:3000/

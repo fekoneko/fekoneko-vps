@@ -1,0 +1,49 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: 2px solid var(--color-border-accent);
+  outline-offset: 0.125rem;
+}
+
+:root {
+  color-scheme: dark;
+  color: var(--color-text-primary);
+  background-color: var(--color-background-secondary);
+
+  font-family: "Noto Sans", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --color-background-primary: #36363d;
+  --color-background-accent: #45454e;
+  --color-background-secondary: #2a2a2f;
+
+  --color-text-primary: #cdcdcd;
+  --color-text-accent: #ffffff;
+  --color-text-secondary: #67676d;
+
+  --color-border-primary: #3e3e47;
+  --color-border-accent: #50505a;
+  --color-border-secondary: #3c3c40;
+
+  --color-shadow: #00000033;
+
+  --transition-fast: 150ms ease-in-out;
+}
+
+body {
+  margin: 0;
+  min-width: 22rem;
+  min-height: 100dvh;
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("/noto-sans.ttf") format("truetype");
+}
