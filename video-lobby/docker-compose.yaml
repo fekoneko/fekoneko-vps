@@ -1,5 +1,5 @@
 services:
-  landing:
+  video-lobby:
     build: .
     container_name: video-lobby
     restart: unless-stopped

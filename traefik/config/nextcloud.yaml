@@ -4,7 +4,7 @@ http:
       entryPoints: web-secure
       rule: Host(`nextcloud.{{env "MAIN_DOMAIN_NAME"}}`) || Host(`www.nextcloud.{{env "MAIN_DOMAIN_NAME"}}`)
       service: nextcloud
-      middlewares: 
+      middlewares:
         - www-redirect@file
         - nextcloud-well-known-redirect
         - nextcloud-headers
