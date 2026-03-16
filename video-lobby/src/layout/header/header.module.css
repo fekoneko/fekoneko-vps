@@ -47,6 +47,11 @@
             color: var(--color-text-accent);
             text-decoration: underline;
           }
+
+          &:focus {
+            color: var(--color-text-accent);
+            text-decoration: underline;
+          }
         }
 
         &:last-child .socialLink {

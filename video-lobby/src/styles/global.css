@@ -4,9 +4,15 @@
   box-sizing: border-box;
 }
 
-*:focus {
+:not(a):focus {
   outline: 2px solid var(--color-border-accent);
   outline-offset: 0.125rem;
+}
+
+a:focus {
+  color: var(--color-text-accent);
+  text-decoration: underline;
+  outline: none;
 }
 
 :root {
