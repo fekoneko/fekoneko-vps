@@ -1,7 +1,6 @@
 import { WS_URL } from "@/config/environment";
-import { useEffect, useRef, useState } from "react";
-
-export type ConnectionStatus = "connecting" | "connected" | "disconnected";
+import { useWebSocket } from "@/hooks/use-web-socket";
+import { useEffect } from "react";
 
 export interface PlayerState {
   paused: boolean;
@@ -23,77 +22,15 @@ export interface UsePlayerApiConfig {
   onClientsCountReceived?: (clientsCount: number) => void | Promise<void>;
 }
 
-export interface UsePlayerApiReturn {
-  sendState: (state: PlayerState) => void;
-  connectionStatus: ConnectionStatus;
-}
-
-export const usePlayerApi = (
-  config: UsePlayerApiConfig,
-): UsePlayerApiReturn => {
-  const [connectionStatus, setConnectionStatus] =
-    useState<ConnectionStatus>("disconnected");
-  const wsRef = useRef<WebSocket | null>(null);
-
-  const getWs = () => {
-    if (!wsRef.current) connect();
-    return wsRef.current!;
-  };
-
-  const connect = () => {
-    wsRef.current?.close();
-    wsRef.current = new WebSocket(WS_URL);
-
-    const handleConnected = () => {
-      setConnectionStatus("connected");
-    };
-
-    const handleDisconnected = () => {
-      setConnectionStatus("disconnected");
-      wsRef.current = null;
-    };
-
-    setConnectionStatus("connecting");
-    wsRef.current.addEventListener("open", handleConnected, { once: true });
-    wsRef.current.addEventListener("error", handleDisconnected, { once: true });
-    wsRef.current.addEventListener("close", handleDisconnected, { once: true });
-  };
-
-  const waitConnected = async () => {
-    const ws = getWs();
-
-    if (ws.readyState === WebSocket.CONNECTING)
-      await new Promise((resolve, reject) => {
-        const resolveAndCleanup = () => {
-          resolve(undefined);
-          ws.removeEventListener("error", rejectAndCleanup);
-        };
-        ws.addEventListener("open", resolveAndCleanup, { once: true });
-
-        const rejectAndCleanup = () => {
-          reject(new Error("WebSocket connection failed"));
-          ws.removeEventListener("open", resolveAndCleanup);
-        };
-        ws.addEventListener("error", rejectAndCleanup, { once: true });
-      });
-    else if (ws.readyState !== WebSocket.OPEN)
-      throw new Error(`WebSocket status is ${ws.readyState}`);
-
-    return ws;
-  };
+export const usePlayerApi = (config: UsePlayerApiConfig) => {
+  const ws = useWebSocket(WS_URL);
 
   useEffect(() => {
-    const send = async () => {
-      const ws = await waitConnected();
-      ws.send(JSON.stringify({ type: "join", roomId: config.roomId }));
-    };
-    send();
+    ws.send(JSON.stringify({ type: "join", roomId: config.roomId }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.roomId]);
 
   useEffect(() => {
-    const ws = getWs();
-
     const handleMessage = ({ data: rawData }: MessageEvent<string>) => {
       const data = JSON.parse(rawData);
 
@@ -127,19 +64,13 @@ export const usePlayerApi = (
         throw new Error(`Unknown message type: ${data?.type}`);
       }
     };
-    ws.addEventListener("message", handleMessage);
 
-    return () => ws.removeEventListener("message", handleMessage);
+    return ws.onMessage(handleMessage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config]);
 
-  const sendState = (state: PlayerState) => {
-    const send = async () => {
-      const ws = await waitConnected();
-      ws.send(JSON.stringify({ type: "state", state, time: Date.now() }));
-    };
-    send();
-  };
+  const sendState = (state: PlayerState) =>
+    ws.send(JSON.stringify({ type: "state", state, time: Date.now() }));
 
-  return { sendState, connectionStatus };
+  return { status: ws.status, sendState };
 };

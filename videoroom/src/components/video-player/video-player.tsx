@@ -12,7 +12,7 @@ export const VideoPlayer: FC = () => {
   const [isVideoLoading, setIsVideoLoading] = useState(false);
   const [clientsCount, setClientsCount] = useState<number>(1);
 
-  const { sendState, connectionStatus } = usePlayerApi({
+  const { sendState, status } = usePlayerApi({
     roomId,
     onStateReceived: async (getState) => {
       const video = videoRef.current;
@@ -39,6 +39,7 @@ export const VideoPlayer: FC = () => {
 
     const handleLoading = () => setIsVideoLoading(true);
     video.addEventListener("loadstart", handleLoading);
+
     const handleLoaded = () => setIsVideoLoading(false);
     video.addEventListener("loadeddata", handleLoaded);
 
@@ -80,8 +81,8 @@ export const VideoPlayer: FC = () => {
 
   return (
     <section className={classes.container}>
-      <p className={classes.connectionStatus} data-state={connectionStatus}>
-        {connectionStatus}
+      <p className={classes.connectionStatus} data-status={status}>
+        {status}
       </p>
 
       <video

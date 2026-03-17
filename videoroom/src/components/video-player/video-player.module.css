@@ -24,7 +24,7 @@
       border-radius: 50%;
     }
 
-    &[data-state="connecting"] {
+    &[data-status="connecting"] {
       color: var(--color-marker-connecting);
 
       &::before {
@@ -32,7 +32,7 @@
       }
     }
 
-    &[data-state="connected"] {
+    &[data-status="connected"] {
       color: var(--color-marker-connected);
 
       &::before {
@@ -40,7 +40,7 @@
       }
     }
 
-    &[data-state="disconnected"] {
+    &[data-status="disconnected"] {
       color: var(--color-marker-disconnected);
 
       &::before {
