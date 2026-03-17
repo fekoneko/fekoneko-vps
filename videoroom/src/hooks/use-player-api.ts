@@ -1,6 +1,5 @@
 import { WS_URL } from "@/config/environment";
 import { useWebSocket } from "@/hooks/use-web-socket";
-import { useEffect } from "react";
 
 export interface PlayerState {
   paused: boolean;
@@ -23,15 +22,15 @@ export interface UsePlayerApiConfig {
 }
 
 export const usePlayerApi = (config: UsePlayerApiConfig) => {
-  const ws = useWebSocket(WS_URL);
+  const { status, send, useOnConnected, useOnMessage } = useWebSocket(WS_URL);
 
-  useEffect(() => {
-    ws.send(JSON.stringify({ type: "join", roomId: config.roomId }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config.roomId]);
+  useOnConnected(
+    () => send(JSON.stringify({ type: "join", roomId: config.roomId })),
+    [config.roomId],
+  );
 
-  useEffect(() => {
-    const handleMessage = ({ data: rawData }: MessageEvent<string>) => {
+  useOnMessage(
+    ({ data: rawData }) => {
       const data = JSON.parse(rawData);
 
       if (data?.type === "state") {
@@ -63,14 +62,12 @@ export const usePlayerApi = (config: UsePlayerApiConfig) => {
       } else {
         throw new Error(`Unknown message type: ${data?.type}`);
       }
-    };
-
-    return ws.onMessage(handleMessage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config]);
+    },
+    [config],
+  );
 
   const sendState = (state: PlayerState) =>
-    ws.send(JSON.stringify({ type: "state", state, time: Date.now() }));
+    send(JSON.stringify({ type: "state", state, time: Date.now() }));
 
-  return { status: ws.status, sendState };
+  return { status, sendState };
 };

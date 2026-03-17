@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { DependencyList, useEffect, useRef, useState } from "react";
 
 export type WebSocketStatus = "connecting" | "connected" | "disconnected";
 
@@ -62,18 +62,32 @@ export const useWebSocket = (url: string, protocols?: string | string[]) => {
       ws.send(data);
       openedSubscribersRef.current.delete(handleConnected);
     };
-    onConnected(handleConnected);
+    subscribeConnected(handleConnected);
   };
 
-  const onConnected = (subscriber: (ws: WebSocket) => void) => {
+  const subscribeConnected = (subscriber: (ws: WebSocket) => void) => {
     openedSubscribersRef.current.add(subscriber);
     return () => void openedSubscribersRef.current.delete(subscriber);
   };
 
-  const onMessage = (subscriber: (e: MessageEvent) => void) => {
+  const subscribeMessage = (subscriber: (e: MessageEvent) => void) => {
     messageSubscribersRef.current.add(subscriber);
     return () => void messageSubscribersRef.current.delete(subscriber);
   };
 
-  return { status, send, onConnected, onMessage };
+  const useOnConnected = (
+    subscriber: (ws: WebSocket) => void,
+    deps?: DependencyList,
+  ) =>
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => subscribeConnected(subscriber), deps);
+
+  const useOnMessage = (
+    subscriber: (e: MessageEvent) => void,
+    deps?: DependencyList,
+  ) =>
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => subscribeMessage(subscriber), deps);
+
+  return { status, send, useOnConnected, useOnMessage };
 };
