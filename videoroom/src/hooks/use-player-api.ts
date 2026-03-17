@@ -1,12 +1,14 @@
 import { WS_URL } from "@/config/environment";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export interface VideoState {
+export type ConnectionStatus = "connecting" | "connected" | "disconnected";
+
+export interface PlayerState {
   paused: boolean;
   currentTime: number;
 }
 
-const isVideoState = (state: unknown): state is VideoState =>
+const isPlayerState = (state: unknown): state is PlayerState =>
   state !== null &&
   typeof state === "object" &&
   "paused" in state &&
@@ -15,31 +17,64 @@ const isVideoState = (state: unknown): state is VideoState =>
   typeof state.currentTime === "number" &&
   !Number.isNaN(state.currentTime);
 
-export interface UseVideoWsConfig {
+export interface UsePlayerApiConfig {
   roomId: string;
-  onStateReceived?: (state: () => VideoState) => void | Promise<void>;
+  onStateReceived?: (state: () => PlayerState) => void | Promise<void>;
   onClientsCountReceived?: (clientsCount: number) => void | Promise<void>;
 }
 
-export interface UseVideoWsReturn {
-  sendState: (state: VideoState) => void;
+export interface UsePlayerApiReturn {
+  sendState: (state: PlayerState) => void;
+  connectionStatus: ConnectionStatus;
 }
 
-export const useWebSocket = (config: UseVideoWsConfig): UseVideoWsReturn => {
+export const usePlayerApi = (
+  config: UsePlayerApiConfig,
+): UsePlayerApiReturn => {
+  const [connectionStatus, setConnectionStatus] =
+    useState<ConnectionStatus>("disconnected");
   const wsRef = useRef<WebSocket | null>(null);
 
   const getWs = () => {
-    if (wsRef.current === null) wsRef.current = new WebSocket(WS_URL);
-    return wsRef.current;
+    if (!wsRef.current) connect();
+    return wsRef.current!;
   };
 
-  const waitWsOpen = async () => {
+  const connect = () => {
+    wsRef.current?.close();
+    wsRef.current = new WebSocket(WS_URL);
+
+    const handleConnected = () => {
+      setConnectionStatus("connected");
+    };
+
+    const handleDisconnected = () => {
+      setConnectionStatus("disconnected");
+      wsRef.current = null;
+    };
+
+    setConnectionStatus("connecting");
+    wsRef.current.addEventListener("open", handleConnected, { once: true });
+    wsRef.current.addEventListener("error", handleDisconnected, { once: true });
+    wsRef.current.addEventListener("close", handleDisconnected, { once: true });
+  };
+
+  const waitConnected = async () => {
     const ws = getWs();
 
     if (ws.readyState === WebSocket.CONNECTING)
       await new Promise((resolve, reject) => {
-        ws.addEventListener("open", resolve);
-        ws.addEventListener("error", reject);
+        const resolveAndCleanup = () => {
+          resolve(undefined);
+          ws.removeEventListener("error", rejectAndCleanup);
+        };
+        ws.addEventListener("open", resolveAndCleanup, { once: true });
+
+        const rejectAndCleanup = () => {
+          reject(new Error("WebSocket connection failed"));
+          ws.removeEventListener("open", resolveAndCleanup);
+        };
+        ws.addEventListener("error", rejectAndCleanup, { once: true });
       });
     else if (ws.readyState !== WebSocket.OPEN)
       throw new Error(`WebSocket status is ${ws.readyState}`);
@@ -49,7 +84,7 @@ export const useWebSocket = (config: UseVideoWsConfig): UseVideoWsReturn => {
 
   useEffect(() => {
     const send = async () => {
-      const ws = await waitWsOpen();
+      const ws = await waitConnected();
       ws.send(JSON.stringify({ type: "join", roomId: config.roomId }));
     };
     send();
@@ -63,14 +98,14 @@ export const useWebSocket = (config: UseVideoWsConfig): UseVideoWsReturn => {
       const data = JSON.parse(rawData);
 
       if (data?.type === "state") {
-        if (!isVideoState(data.state))
+        if (!isPlayerState(data.state))
           throw new Error(`Invalid state: ${JSON.stringify(data.state)}`);
 
         if (!data.time || typeof data.time !== "number")
           throw new Error(`Invalid time: ${data.time}`);
 
         config.onStateReceived?.(() => {
-          const correctedState: VideoState = { ...data.state };
+          const correctedState: PlayerState = { ...data.state };
           if (correctedState.paused === false)
             correctedState.currentTime += Date.now() - data.time;
 
@@ -95,15 +130,16 @@ export const useWebSocket = (config: UseVideoWsConfig): UseVideoWsReturn => {
     ws.addEventListener("message", handleMessage);
 
     return () => ws.removeEventListener("message", handleMessage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config]);
 
-  const sendState = (state: VideoState) => {
+  const sendState = (state: PlayerState) => {
     const send = async () => {
-      const ws = await waitWsOpen();
+      const ws = await waitConnected();
       ws.send(JSON.stringify({ type: "state", state, time: Date.now() }));
     };
     send();
   };
 
-  return { sendState };
+  return { sendState, connectionStatus };
 };

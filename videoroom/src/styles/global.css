@@ -38,6 +38,10 @@ a:focus {
   --color-border-accent: #50505a;
   --color-border-secondary: #3c3c40;
 
+  --color-marker-connecting: #67676d;
+  --color-marker-connected: #67976d;
+  --color-marker-disconnected: #97676d;
+
   --color-shadow: #00000033;
 
   --transition-fast: 150ms ease-in-out;

@@ -1,12 +1,12 @@
 import { ServerWebSocket } from "bun";
 import { readdir } from "node:fs/promises";
 
-interface VideoState {
+interface PlayerState {
   paused: boolean;
   currentTime: number;
 }
 
-const isVideoState = (state: unknown): state is VideoState =>
+const isPlayerState = (state: unknown): state is PlayerState =>
   state !== null &&
   typeof state === "object" &&
   "paused" in state &&
@@ -17,7 +17,7 @@ const isVideoState = (state: unknown): state is VideoState =>
 
 interface Room {
   id: string;
-  state: VideoState;
+  state: PlayerState;
   clients: Set<ServerWebSocket>;
 }
 
@@ -35,7 +35,7 @@ const handleJoin = (ws: ServerWebSocket, data: unknown) => {
 
   let room = roomById.get(roomId);
   if (!room) {
-    const state: VideoState = { paused: true, currentTime: 0 };
+    const state: PlayerState = { paused: true, currentTime: 0 };
     room = { id: roomId, state, clients: new Set() };
     roomById.set(roomId, room);
   }
@@ -54,7 +54,7 @@ const handleSetState = (ws: ServerWebSocket, data: unknown) => {
   if (!isDataValid) throw new Error(`Invalid message: ${JSON.stringify(data)}`);
   const { state, time } = data;
 
-  if (!isVideoState(state))
+  if (!isPlayerState(state))
     throw new Error(`Invalid state: ${JSON.stringify(state)}`);
 
   if (!time || typeof time !== "number")
@@ -63,7 +63,7 @@ const handleSetState = (ws: ServerWebSocket, data: unknown) => {
   const room = roomByClient.get(ws);
   if (!room) throw new Error("Has not joined a room");
 
-  const correctedState: VideoState = { ...state };
+  const correctedState: PlayerState = { ...state };
   if (correctedState.paused === false)
     correctedState.currentTime += Date.now() - time;
 
@@ -82,7 +82,7 @@ const leaveRoom = (ws: ServerWebSocket) => {
   else room.clients.forEach((c) => sendClientCount(c, room.clients.size));
 };
 
-const sendState = (ws: ServerWebSocket, state: VideoState) => {
+const sendState = (ws: ServerWebSocket, state: PlayerState) => {
   ws.send(JSON.stringify({ type: "state", state, time: Date.now() }));
 };
 

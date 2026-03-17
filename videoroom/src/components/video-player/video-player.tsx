@@ -1,32 +1,18 @@
-import { useWebSocket, VideoState } from "@/hooks/use-web-socket";
-import { FC, useEffect, useRef, useState } from "react";
+import { PlayerState, usePlayerApi } from "@/hooks/use-player-api";
+import { ChangeEventHandler, FC, useEffect, useRef, useState } from "react";
 import classes from "./video-player.module.css";
 
 export const VideoPlayer: FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sentStateRef = useRef<PlayerState | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<File | null>(null);
+  const [videoSrc, setVideoSrc] = useState<string>();
+  const [videoName, setVideoName] = useState<string>();
   const [roomId, setRoomId] = useState("");
   const [isVideoLoading, setIsVideoLoading] = useState(false);
   const [clientsCount, setClientsCount] = useState<number>(1);
-  const sentStateRef = useRef<VideoState | null>(null);
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleLoading = () => setIsVideoLoading(true);
-    video.addEventListener("loadstart", handleLoading);
-    const handleLoaded = () => setIsVideoLoading(false);
-    video.addEventListener("loadeddata", handleLoaded);
-
-    return () => {
-      video.removeEventListener("loadstart", handleLoading);
-      video.removeEventListener("loadeddata", handleLoaded);
-    };
-  }, []);
-
-  const { sendState } = useWebSocket({
+  const { sendState, connectionStatus } = usePlayerApi({
     roomId,
     onStateReceived: async (getState) => {
       const video = videoRef.current;
@@ -47,6 +33,21 @@ export const VideoPlayer: FC = () => {
     onClientsCountReceived: setClientsCount,
   });
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleLoading = () => setIsVideoLoading(true);
+    video.addEventListener("loadstart", handleLoading);
+    const handleLoaded = () => setIsVideoLoading(false);
+    video.addEventListener("loadeddata", handleLoaded);
+
+    return () => {
+      video.removeEventListener("loadstart", handleLoading);
+      video.removeEventListener("loadeddata", handleLoaded);
+    };
+  }, [videoSrc]);
+
   const handleStateChange = () => {
     const video = videoRef.current;
     const sentState = sentStateRef.current;
@@ -64,31 +65,48 @@ export const VideoPlayer: FC = () => {
     if (!isSentState) sendState(state);
   };
 
+  const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setVideoSrc(URL.createObjectURL(file));
+    setVideoName(file.name);
+  };
+
+  const handleRoomIdChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const roomId = e.target.value;
+    setRoomId(roomId);
+  };
+
   return (
     <section className={classes.container}>
+      <p className={classes.connectionStatus} data-state={connectionStatus}>
+        {connectionStatus}
+      </p>
+
       <video
         ref={videoRef}
+        src={videoSrc}
         controls
         onPlay={handleStateChange}
         onPause={handleStateChange}
         onSeeking={handleStateChange}
         className={classes.video}
-      >
-        {file && <source src={URL.createObjectURL(file)} type="video/mp4" />}
-      </video>
+      />
 
       <form onSubmit={(e) => e.preventDefault()} className={classes.controls}>
         <button
+          type="button"
           onClick={() => fileInputRef.current?.click()}
           className={classes.fileControl}
         >
-          <span>{file ? file.name : "Choose a video"}</span>
+          <span>{videoName ?? "Choose a video"}</span>
 
           <input
             ref={fileInputRef}
             type="file"
             accept="video/*"
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            onChange={handleFileChange}
             style={{ display: "none" }}
           />
         </button>
@@ -100,7 +118,8 @@ export const VideoPlayer: FC = () => {
             <input
               type="text"
               placeholder="Paste existing to join or make your own"
-              onChange={(e) => setRoomId(e.target.value)}
+              value={roomId}
+              onChange={handleRoomIdChange}
             />
           </label>
 
