@@ -6,6 +6,8 @@ services:
     env_file:
       - .env
     environment:
+      - EXPERIMENTAL_AWG=true
+      - OVERRIDE_AUTO_AWG=awg
       - INIT_ENABLED=true
       - INIT_USERNAME=${INIT_USERNAME}
       - INIT_PASSWORD=${INIT_PASSWORD}

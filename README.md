@@ -18,23 +18,7 @@ All the services are under _Traefik_ reverse-proxy and use their own dedicated D
 
 ### Other:
 
-- [Wireguard VPN](https://github.com/wireguard) - `$DOMAIN:51820/udp`
-- Wireguard VPN through [WebSocket tunnel](https://github.com/erebe/wstunnel):
-
-```shell
-# This will need a DNS server or cache to be available
-wstunnel client -L 'udp://51820:172.20.0.4:51820?timeout_sec=0' wss://wstunnel.$DOMAIN:443
-
-# This will allow to connect directly using IP address
-# Preferrable when DNS is done througn WireGuard as well
-wstunnel client \
-  --local-to-remote udp://51820:172.20.0.4:51820?timeout_sec=0 \
-  --tls-verify-certificate \
-  --tls-sni-override wstunnel.$DOMAIN \
-  --http-headers Host:wstunnel.$DOMAIN \
-  wss://$IPV4:443
-```
-
+- [AmneziaWG](https://github.com/wireguard) - `$DOMAIN:51820/udp`
 - [Drawpile](https://github.com/drawpile/Drawpile) server - `wss://drawpile.$DOMAIN` | `drawpile.$DOMAIN:27750/tcp`
 - [Anki](https://github.com/ankitects/anki) sync server - `https://anki.$DOMAIN`
 
