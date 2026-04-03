@@ -134,6 +134,21 @@ run() {
     | grep '^[0-9.]*$' \
     | print_tag 'landing + videoroom (oven/bun)' \
     || exit 1
+
+  # wstunnel (ubuntu)
+  fetch_tags_dockerhub 'library' 'ubuntu' \
+    | grep '^[0-9.]*$' \
+    | print_tag 'wstunnel (ubuntu)' \
+    || exit 1
+
+  # wstunnel (wstunnel)
+  curl -sL 'https://api.github.com/repos/erebe/wstunnel/releases/latest' \
+    -H 'Accept: application/json' \
+    -H 'X-GitHub-Api-Version: 2022-11-28' \
+    | jq -r '.tag_name' \
+    | tr -d 'v' \
+    | print_tag 'wstunnel (erebe/wstunnel)' \
+    || exit 1
 }
 
 run

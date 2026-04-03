@@ -14,7 +14,7 @@ export interface ServiceAddress {
 
 export const SERVICES: Service[] = [
   {
-    title: "AmneziaWG",
+    title: "Wireguard",
     names: ["wireguard", "wstunnel"],
     addresses: [
       {
@@ -25,7 +25,12 @@ export const SERVICES: Service[] = [
       {
         address: `${DOMAIN}:51820/udp`,
         browserAccessible: false,
-        description: "AmneziaWG connection",
+        description: "Regular Wireguard connection",
+      },
+      {
+        address: `wss://wstunnel.${DOMAIN}:443`,
+        browserAccessible: false,
+        description: "Tunneled WebSocket connection",
       },
     ],
   },
