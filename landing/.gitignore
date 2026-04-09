@@ -5,3 +5,4 @@ Thumbs.db
 !.env.example
 /node_modules/
 /dist/
+/public/**/*.local

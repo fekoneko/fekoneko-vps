@@ -3,7 +3,7 @@ import { readdir } from "node:fs/promises";
 const fileRoutes: Bun.Serve.Options<undefined, string>["routes"] = {};
 
 for (const path of await readdir("./dist", { recursive: true })) {
-  fileRoutes["/" + path] = Bun.file(`./dist/${path}`);
+  fileRoutes["/" + path.replace(/.local$/, "")] = Bun.file(`./dist/${path}`);
 }
 
 const server = Bun.serve({
