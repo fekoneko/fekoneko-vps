@@ -15,4 +15,4 @@ http:
   middlewares:
     traefik-auth:
       basicauth:
-        users: {{env "TRAEFIK_DASHBOARD_CREDENTIALS"}}
+        users: '{{env "TRAEFIK_DASHBOARD_CREDENTIALS"}}'

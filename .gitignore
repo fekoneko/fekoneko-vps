@@ -3,3 +3,5 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+*.local
+*.local.*
