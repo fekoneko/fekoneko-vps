@@ -10,7 +10,6 @@ const server = Bun.serve({
   port: 3000,
   routes: {
     ...fileRoutes,
-    "/": Bun.file("./dist/index.html"),
     "/*": Response.redirect("/"),
   },
 });
